@@ -1,94 +1,143 @@
 import time
 
-#entrada
-ValoresEntrada= []
+# Bloco 0: Deposito
+ValoresEntrada = []
 Valores_despesa_fixa = []
 Valores_despesa_variavel = []
 
-
-nome = input('Por favor nós informe seu nome: ')
-print(f'Olá {nome}, seja bem vinda a sua planilha finaceira')
+nome = input('Por favor, informe seu nome: ')
+print(f'\nOlá {nome}, seja bem-vinda à sua planilha financeira!')
 print('Vamos começar!!!')
+time.sleep(0.5)
 
-time.sleep(0.50)
-#Valores de entradas 
-tem_mais_1entrdas= input('Tem mais de uma entrada esss mês? Sim ou Não ').upper()
-print('Beleza, vamos lá...')
+# BLOCO 1: ENTRADAS 
+while True:
+    pergunta = input('\nTem mais de uma ENTRADA esse mês? Sim ou Não: ').upper().strip()
+    if pergunta == 'SIM':
+        while True:
+            try:
+                qtd = int(input('Digite a quantidade de entradas: '))
+                break
+            except ValueError:
+                print('Erro: Digite um número inteiro para a quantidade.')
+        
+        i = 0
+        while i < qtd:
+            try:
+                valor = float(input(f'Digite o {i+1}º valor recebido: ').replace(',', '.'))
+                ValoresEntrada.append(valor)
+                i += 1
+            except ValueError:
+                print('Erro: Valor inválido. Use apenas números.')
+        break
+    elif pergunta in ['NÃO', 'NAO', 'N']:
+        while True:
+            try:
+                valor = float(input('Digite o valor que foi recebido: ').replace(',', '.'))
+                ValoresEntrada.append(valor)
+                break
+            except ValueError:
+                print('Erro: Valor inválido.')
+        break
+    else:
+        print('Erro: Digite apenas "Sim" ou "Não".')
 
-if tem_mais_1entrdas == 'SIM':
-    quantidade_entrada = int(input('Digite a quantidade: '))
-
-    for i in range (quantidade_entrada):
-        valor= float(input('Digite os valores que foram recebidos: '))
-        ValoresEntrada.append(valor)
-
-elif tem_mais_1entrdas == 'NÃO':
-   valor= float(input('Digite o valor que foi recebido: '))
-   ValoresEntrada.append(valor)
-
-
-#valores de despesas fixas
 print(40*'_')
 
-Tem_despesas_fixa = input('E de despesas fixas tem mais de uma? Sim ou Não ').upper()
-
-if Tem_despesas_fixa == 'SIM':
-    QuantidadeFixa = int(input('Digite a quantidade de despesas fixas: '))
-
-    for i  in range (QuantidadeFixa):
-     valor= float(input('Digite o valor das despesas fixas: '))
-     Valores_despesa_fixa.append(valor)
-
-elif Tem_despesas_fixa == 'NÃO':
-    Valor = float(input('Digite o valor de despesa fixa: '))
-    Valores_despesa_fixa.append(valor)
-
+# BLOCO 2: DESPESAS FIXAS
+while True:
+    pergunta = input('E de DESPESAS FIXAS, tem mais de uma? Sim ou Não: ').upper().strip()
+    if pergunta == 'SIM':
+        while True:
+            try:
+                qtd = int(input('Digite a quantidade de despesas fixas: '))
+                break
+            except ValueError:
+                print('Erro: Digite um número inteiro.')
+        
+        i = 0
+        while i < qtd:
+            try:
+                valor = float(input(f'Digite o valor da {i+1}ª despesa fixa: ').replace(',', '.'))
+                Valores_despesa_fixa.append(valor)
+                i += 1
+            except ValueError:
+                print('Erro: Valor inválido.')
+        break
+    elif pergunta in ['NÃO', 'NAO', 'N']:
+        while True:
+            try:
+                valor = float(input('Digite o valor da despesa fixa: ').replace(',', '.'))
+                Valores_despesa_fixa.append(valor)
+                break
+            except ValueError:
+                print('Erro: Valor inválido.')
+        break
+    else:
+        print('Erro: Digite apenas "Sim" ou "Não".')
 
 print(40*'_')
-# Valores de entradas variaveis
 
-Mais_entrada_variaveis = input('tem mais de uma despesa váriavel? Sim ou Não ').upper()
-if Mais_entrada_variaveis == 'SIM':
-    quantidade_variavel = int(input('Quantas despesas váriavel: '))
+# BLOCO 3: DESPESAS VARIÁVEIS
+while True:
+    pergunta = input('Tem mais de uma DESPESA VARIÁVEL? Sim ou Não: ').upper().strip()
+    if pergunta == 'SIM':
+        while True:
+            try:
+                qtd = int(input('Quantas despesas variáveis: '))
+                break
+            except ValueError:
+                print('Erro: Digite um número inteiro.')
+        
+        i = 0
+        while i < qtd:
+            try:
+                valor = float(input(f'Digite o valor da {i+1}ª despesa variável: ').replace(',', '.'))
+                Valores_despesa_variavel.append(valor)
+                i += 1
+            except ValueError:
+                print('Erro: Valor inválido.')
+        break
+    elif pergunta in ['NÃO', 'NAO', 'N']:
+        while True:
+            try:
+                valor = float(input('Digite o valor da despesa variável: ').replace(',', '.'))
+                Valores_despesa_variavel.append(valor)
+                break
+            except ValueError:
+                print('Erro: Valor inválido.')
+        break
+    else:
+        print('Erro: Digite apenas "Sim" ou "Não".')
 
-    for i in range (quantidade_variavel):
-     valor = float(input('Digite o valor das despesas variável: '))
-     Valores_despesa_variavel.append(valor)
-
-elif Mais_entrada_variaveis == 'NÃO':
-    valor = float(input('Digite o valor da despesa variável: '))
-    Valores_despesa_variavel.append(valor)
-
-# total de tudo/soma
+# 4. CÁLCULOS FINAIS
 total_entrada = sum(ValoresEntrada)
-total_despesas_fixa= sum(Valores_despesa_fixa)
+total_despesas_fixa = sum(Valores_despesa_fixa)
 total_variaveis = sum(Valores_despesa_variavel)
-Total_Despesas_fixa_variavel = total_despesas_fixa + total_variaveis
-total_valores_sub = total_entrada - Total_Despesas_fixa_variavel
+total_geral_despesas = total_despesas_fixa + total_variaveis
+saldo_final = total_entrada - total_geral_despesas
 
-if total_valores_sub <= 0:
-    print('Cuidado você está gastando de mais!!!!')
+print("\n" + 40*'=')
+if saldo_final <= 0:
+    print('CUIDADO! Você está gastando demais ou está no limite!')
 else:
-    print('parabéns está tudo em ordem!!!!')
+    print('Parabéns, suas finanças estão em ordem!')
 
-print(10*' ')
-print(f'o total de valores de entradas é R${total_entrada:.2f}')
-print(10*' ')
-print(f'E o total de Despesas fixas é R${total_despesas_fixa:.2f}')
-print(10*' ')
-print(f'e o total de despesas variáveis R${total_variaveis:.2f} ')
-print(10*' ')
-print(f'o valor final que irá sobrar é R${total_valores_sub:.2f} no final do mês')
+print(f'\nTotal de Entradas:      R${total_entrada:.2f}')
+print(f'Total Despesas Fixas:   R${total_despesas_fixa:.2f}')
+print(f'Total Despesas Variáveis: R${total_variaveis:.2f}')
+print(f'SALDO FINAL:            R${saldo_final:.2f}')
+print(40*'=')
 
-# Abertura de arquivos para arquivo texto
-AberturaArquivo = open('dados.txt' , 'w')
-# Escrita
-AberturaArquivo.write(f'Seja bem vindo {nome} a sua tabela.\n')
-print(' \n')
-AberturaArquivo.write(f'Valores de entrada          Despesas fixas          Despesas Variáveis\n')
-print(' \n')
-AberturaArquivo.write(f'R${total_entrada:<10}            R${total_despesas_fixa:<10}         {total_variaveis:<10}\n')
-print(' \n')
-AberturaArquivo.write(f'e iram te sobrar final do mês                                 {total_valores_sub:.2f}\n')
-
-AberturaArquivo.close()
+# 5. GRAVAÇÃO NO ARQUIVO
+try:
+    with open('dados.txt', 'w', encoding='utf-8') as arquivo:
+        arquivo.write(f'Relatório de {nome}\n')
+        arquivo.write("-" * 50 + "\n")
+        arquivo.write(f"{'Entradas':<15} | {'Fixas':<15} | {'Variáveis':<15}\n")
+        arquivo.write(f"R${total_entrada:<13.2f} | R${total_despesas_fixa:<13.2f} | R${total_variaveis:<13.2f}\n")
+        arquivo.write("-" * 50 + "\n")
+        arquivo.write(f'Saldo Final que irá sobrar: R${saldo_final:.2f}\n')
+    print("\nOs dados foram salvos com sucesso em 'dados.txt'!")
+except Exception as e:
+    print(f"\nErro ao salvar o arquivo: {e}")
